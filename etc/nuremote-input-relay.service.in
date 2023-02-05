@@ -1,0 +1,12 @@
+[Unit]
+Description=NuRemote input relay service
+
+[Service]
+User=root
+Environment="DISPLAY=_DISPLAY"
+Environment="XAUTHORITY=/home/_USER/.Xauthority"
+ExecStart=_IR_HOST_BIN
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

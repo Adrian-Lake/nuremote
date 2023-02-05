@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>rmt</title>
+        <script src="/js/socket.io.min.js"></script>
+        <script src="/js/input_capture.js"></script>
+        <script>
+
+            function mouse_relative_event(e){
+
+                // console.log(e);
+
+                e.clientX/window.innerWidth
+
+                socket.emit('input',{
+                    source: 'mouse/move',
+                    mode: 'rel',
+                    x: e.clientX/window.innerWidth,
+                    y: e.clientY/window.innerHeight
+                });
+            }
+
+            function mouse_button_event(e, type){
+
+                // console.log(e);
+
+                let name;
+
+                if(e.button == 0)
+                    name = 'left';
+                else if(e.button == 1)
+                    name = 'middle';
+                else if(e.button == 2) 
+                    name = 'right';
+                else
+                    name = 'unknown';
+
+                socket.emit('input',{
+                    source: 'mouse/button',
+                    type: type,
+                    name: name
+                });            
+            }
+
+            function keyboard_event(e, type){
+
+                // console.log(e);
+
+                socket.emit('input',{
+                    source: 'keyboard',
+                    type: type,
+                    name: e.code
+                });            
+            }
+
+            var socket = io();
+
+            window.onload = function(){
+
+                mouse_pad.onmousemove = mouse_relative_event;
+                mouse_pad.onmousedown = function(e){mouse_button_event(e, 'down')};
+                mouse_pad.onmouseup = function(e){mouse_button_event(e, 'up')};
+                document.onkeydown = function(e){keyboard_event(e, 'down')};
+                document.onkeyup = function(e){keyboard_event(e, 'up')};
+
+            }
+
+        </script>
+        <style>
+            body{
+                margin: 0;
+            }
+            #mouse_pad{
+                background-color: #666;
+                width: 100vw;
+                height: 100vh;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div id="mouse_pad"></div>
+    </body>
+</html>

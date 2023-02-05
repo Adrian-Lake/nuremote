@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>NuRemote</title>
+
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no;user-scalable=0;"/>
+        
+        <script src="/js/socket.io.min.js" type="text/javascript"></script>
+
+        <script src="/js/jquery-3.6.3.min.js" type="text/javascript"></script>
+        
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+
+        <script src="/js/input_capture.js" type="text/javascript"></script>
+        <script>
+
+            window.onload = function(){
+
+                mobileTrackpad.ontouchmove = touchMoveHandler;
+                mobileTrackpad.ontouchstart = touchStartHandler;
+                mobileTrackpad.ontouchend = touchEndHandler;
+                mobileKeyInput.onfocus = (e) => initMobileKeyPressElem(e.target);
+                mobileKeyInput.oninput = mobileKeyPressHandler;
+
+        }
+        </script>
+        <style>
+            html{
+                overflow: hidden;
+            }
+            body{
+                overflow: hidden;
+                margin: 0;
+            }
+
+            #mobile_inputs{
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+            }
+            #mobileTrackpad{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #444;
+                background: rgba(0, 0, 0, .60) url("/img/trackpad_bg.jpg");
+                background-blend-mode: darken;
+                background-size: 50vw;
+
+            }
+            #mobileKeyInput{
+                position: absolute; 
+                top:-500px;
+            }
+            .mobileTrackpad_btn{
+                position: absolute;
+                right: 0;
+                margin: 3px;
+                z-index: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="mobile_inputs">
+            <div id="mobileTrackpad" tabindex="0"></div>
+            <textarea id="mobileKeyInput" autocorrect="off" autocapitalize="off" type="text"></textarea>
+            <button type="button" class="mobileTrackpad_btn btn btn-dark" onclick="mobileKeyInput.focus()">Keyboard</button>
+        
+        </div>
+        </div>
+    </body>
+</html>
+

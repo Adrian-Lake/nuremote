@@ -1,0 +1,11 @@
+[Unit]
+Description=Input relay for NuRemote 
+
+[Service]
+User=_USER
+WorkingDirectory=_ROOT_DIR
+ExecStart=python3 "_NUREMOTE_APP"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
